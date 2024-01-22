@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import HomeScreen from './components/HomeScreen';
-import ProfileScreen from './components/ProfileScreen';
+import HomeScreen from './src/components/HomeScreen';
+import ProfileScreen from './src/components/ProfileScreen';
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {
