@@ -70,7 +70,9 @@ const LoginScreen = ({navigation}) => {
         secureTextEntry
         autoCapitalize="none"
       />
-      <Button title="Se connecter" onPress={handleLogin} style={styles.button}/>
+      <TouchableOpacity style={styles.button} title="S'inscrire" onPress={handleLogin}>
+        <Text style={styles.buttonText}>Se connecter</Text>
+      </TouchableOpacity>
       <View style={styles.registerContainer}>
         <Text>Vous n'avez pas de compte ? </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
@@ -84,33 +86,43 @@ const LoginScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F5FCFF',
+    alignItems: 'center',
     justifyContent: 'center',
-    padding: 16,
   },
   title: {
     fontSize: 32,
     marginBottom: 24,
+    color: '#333333',
   },
   input: {
-    height: 40,
-    borderColor: 'gray',
+    width: '80%',
+    borderColor: 'tomato',
     borderWidth: 1,
-    padding: 8,
+    borderRadius: 5,
+    padding: 10,
     marginBottom: 15,
-    borderRadius: 10,
+    fontSize: 18,
+  },
+  button: {
+    width: '80%',
+    backgroundColor: 'tomato',
+    borderRadius: 5,
+    padding: 10,
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
   },
   registerContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
   },
   registerText: {
-    color: 'tomato',
+    color: '#333333',
     textDecorationLine: 'underline',
-  },
-  button: {
-    borderRadius: 10,
   },
 });
 

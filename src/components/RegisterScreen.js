@@ -85,7 +85,9 @@ const RegisterScreen = ({navigation}) => {
         secureTextEntry
         autoCapitalize="none"
       />
-      <Button title="S'inscrire" onPress={handleRegister}/>
+      <TouchableOpacity style={styles.button} title="S'inscrire" onPress={handleRegister}>
+        <Text style={styles.buttonText}>S'inscrire</Text>
+      </TouchableOpacity>
       <View style={styles.loginContainer}>
         <Text>Vous avez déjà un compte ? </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
@@ -99,28 +101,42 @@ const RegisterScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F5FCFF',
+    alignItems: 'center',
     justifyContent: 'center',
-    padding: 16,
   },
   title: {
     fontSize: 32,
     marginBottom: 24,
+    color: '#333333',
   },
   input: {
-    height: 40,
-    borderColor: 'gray',
+    width: '80%',
+    borderColor: 'tomato',
     borderWidth: 1,
-    padding: 8,
+    borderRadius: 5,
+    padding: 10,
     marginBottom: 15,
+    fontSize: 18,
+  },
+  button: {
+    width: '80%',
+    backgroundColor: 'tomato',
+    borderRadius: 5,
+    padding: 10,
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
   },
   loginContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
   },
   loginText: {
-    color: 'tomato',
+    color: '#333333',
     textDecorationLine: 'underline',
   },
 });
