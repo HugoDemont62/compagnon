@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Text, View, Button } from 'react-native';
+import {Text, View} from 'react-native';
 
-export default function ProfileScreen({ navigation }) {
+export default function ProfileScreen({navigation}) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>Profil Screen</Text>
     </View>
   );
