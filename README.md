@@ -35,11 +35,3 @@ Compagnon is a React Native Expo mobile application designed to simplify the pro
    ```
 
    Follow the displayed instructions to launch the application on an emulator or physical device.
-
-## Contribution
-
-Contributions to Compagnon are welcome! Before contributing, please refer to the contribution guidelines.
-
-## License
-
-This project is under the MIT License.
