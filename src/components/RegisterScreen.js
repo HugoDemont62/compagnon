@@ -1,18 +1,31 @@
 import React, {useState} from 'react';
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {createUserWithEmailAndPassword, getAuth} from 'firebase/auth';
 
-const RegisterScreen = () => {
+const RegisterScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleRegister = () => {
+    if (password !== confirmPassword) {
+      console.log('Les mots de passe ne correspondent pas.');
+      return;
+    }
+
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password).
       then((userCredential) => {
-        // Signed in
+        console.log('User successfully logged in!');
         const user = userCredential.user;
-        // ...
+        navigation.navigate('App', {screen: 'Accueil'});
       }).
       catch((error) => {
         const errorCode = error.code;
@@ -64,7 +77,21 @@ const RegisterScreen = () => {
         secureTextEntry
         autoCapitalize="none"
       />
+      <TextInput
+        style={styles.input}
+        onChangeText={setConfirmPassword}
+        value={confirmPassword}
+        placeholder="Confirmer le mot de passe"
+        secureTextEntry
+        autoCapitalize="none"
+      />
       <Button title="S'inscrire" onPress={handleRegister}/>
+      <View style={styles.loginContainer}>
+        <Text>Vous avez déjà un compte ? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.loginText}>Se connecter</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -85,6 +112,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 8,
     marginBottom: 15,
+  },
+  loginContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  loginText: {
+    color: 'tomato',
+    textDecorationLine: 'underline',
   },
 });
 
