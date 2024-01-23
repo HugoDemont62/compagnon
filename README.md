@@ -11,5 +11,6 @@ Compagnon is a React Native Expo mobile application designed to simplify the pro
 - History of previous reports.
 - Export reports in PDF format.
 
+The entire application is intended for the private sector for an age group of 18 to 64 years old.
 
 [![wakatime](https://wakatime.com/badge/user/14fe3c61-8f4f-4dd2-b75c-eff28a472911/project/018d28f0-6ee2-44a1-9a12-13ccc34baa8e.svg)](https://wakatime.com/badge/user/14fe3c61-8f4f-4dd2-b75c-eff28a472911/project/018d28f0-6ee2-44a1-9a12-13ccc34baa8e)
