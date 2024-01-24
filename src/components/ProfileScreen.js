@@ -1,11 +1,33 @@
-import * as React from 'react';
-import {Text, View} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Button, TextInput } from 'react-native';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-export default function ProfileScreen({navigation}) {
+const ProfileScreen = ({navigation}) => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  if (!user) {
+    return null;
+  }
+
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Profil Screen</Text>
-  // TODO : faire la page profil avec les informations du user 
+    <View>
+      <Text>Bonjour, {user.email}</Text>
+      <Button title="Se déconnecter" onPress={() => {
+        const auth = getAuth();
+        auth.signOut();
+        navigation.navigate('Auth', {screen: 'Login'});
+      }}/>
     </View>
   );
 }
+
+export default ProfileScreen;
