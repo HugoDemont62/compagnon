@@ -22,7 +22,6 @@ const ProfileScreen = ({navigation}) => {
     <View>
       <Text>Bonjour, {user.email}</Text>
       <Text>Nom d'utilisateur: {user.displayName}</Text>
-      <Text>Fournisseur d'identité: {user.providerData[0].providerId}</Text>
       <Text>UID: {user.uid}</Text>
       {user.photoURL &&
         <Image source={{uri: user.photoURL}} style={{width: 50, height: 50}}/>}

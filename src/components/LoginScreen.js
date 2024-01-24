@@ -99,12 +99,14 @@ const styles = StyleSheet.create({
     borderColor: 'tomato',
     padding: 10,
     marginBottom: 15,
+    borderRadius: 10,
   },
   button: {
     backgroundColor: 'tomato',
     padding: 10,
     alignItems: 'center',
     marginBottom: 15,
+    borderRadius: 10,
   },
   buttonText: {
     color: '#fff',
