@@ -7,12 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {createUserWithEmailAndPassword, getAuth} from 'firebase/auth';
+import {createUserWithEmailAndPassword, getAuth, updateProfile} from 'firebase/auth';
 
 const RegisterScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [username, setUsername] = useState('');
 
   const handleRegister = () => {
     if (password !== confirmPassword) {
@@ -25,7 +26,12 @@ const RegisterScreen = ({navigation}) => {
       then((userCredential) => {
         console.log('User successfully logged in!');
         const user = userCredential.user;
-        navigation.navigate('App', {screen: 'Accueil'});
+        updateProfile(user, {displayName: username}).then(() => {
+          console.log('Username updated successfully');
+          navigation.navigate('App', {screen: 'Accueil'});
+        }).catch((error) => {
+          console.log('Failed to update username', error);
+        });
       }).
       catch((error) => {
         const errorCode = error.code;
@@ -61,6 +67,13 @@ const RegisterScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>S'inscrire</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={setUsername}
+        value={username}
+        placeholder="Nom d'utilisateur"
+        autoCapitalize="none"
+      />
       <TextInput
         style={styles.input}
         onChangeText={setEmail}
@@ -100,44 +113,37 @@ const RegisterScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#fff',
+    padding: 20,
     flex: 1,
-    backgroundColor: '#F5FCFF',
-    alignItems: 'center',
     justifyContent: 'center',
   },
   title: {
-    fontSize: 32,
-    marginBottom: 24,
-    color: '#333333',
+    fontSize: 24,
+    marginBottom: 20,
   },
   input: {
-    width: '80%',
-    borderColor: 'tomato',
     borderWidth: 1,
-    borderRadius: 5,
+    borderColor: 'tomato',
     padding: 10,
     marginBottom: 15,
-    fontSize: 18,
   },
   button: {
-    width: '80%',
     backgroundColor: 'tomato',
-    borderRadius: 5,
     padding: 10,
     alignItems: 'center',
     marginBottom: 15,
   },
   buttonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
+    color: '#fff',
   },
   loginContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
+    justifyContent: 'center',
   },
   loginText: {
-    color: '#333333',
-    textDecorationLine: 'underline',
+    fontWeight: 'bold',
+    color: 'tomato',
   },
 });
 

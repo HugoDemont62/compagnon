@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {
-  Button,
   StyleSheet,
   Text,
   TextInput,
@@ -70,7 +69,8 @@ const LoginScreen = ({navigation}) => {
         secureTextEntry
         autoCapitalize="none"
       />
-      <TouchableOpacity style={styles.button} title="S'inscrire" onPress={handleLogin}>
+      <TouchableOpacity style={styles.button} title="S'inscrire"
+                        onPress={handleLogin}>
         <Text style={styles.buttonText}>Se connecter</Text>
       </TouchableOpacity>
       <View style={styles.registerContainer}>
@@ -85,44 +85,37 @@ const LoginScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#fff',
+    padding: 20,
     flex: 1,
-    backgroundColor: '#F5FCFF',
-    alignItems: 'center',
     justifyContent: 'center',
   },
   title: {
-    fontSize: 32,
-    marginBottom: 24,
-    color: '#333333',
+    fontSize: 24,
+    marginBottom: 20,
   },
   input: {
-    width: '80%',
-    borderColor: 'tomato',
     borderWidth: 1,
-    borderRadius: 5,
+    borderColor: 'tomato',
     padding: 10,
     marginBottom: 15,
-    fontSize: 18,
   },
   button: {
-    width: '80%',
     backgroundColor: 'tomato',
-    borderRadius: 5,
     padding: 10,
     alignItems: 'center',
     marginBottom: 15,
   },
   buttonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
+    color: '#fff',
   },
-  registerContainer: {
+  loginContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
+    justifyContent: 'center',
   },
   registerText: {
-    color: '#333333',
-    textDecorationLine: 'underline',
+    fontWeight: 'bold',
+    color: 'tomato',
   },
 });
 
