@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import PasswordInput from './PasswordInput';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -64,20 +64,11 @@ const LoginScreen = ({navigation}) => {
           keyboardType="email-address"
           autoCapitalize="none"
         />
-        <View style={styles.inputSection}>
-          <TextInput
-            style={styles.inputPassword}
-            onChangeText={setPassword}
-            value={password}
-            placeholder="Mot de passe"
-            secureTextEntry={!showPassword}
-            autoCapitalize="none"
-          />
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-            <Ionicons name={showPassword ? 'eye-off' : 'eye'} size={24}
-                      color="grey"/>
-          </TouchableOpacity>
-        </View>
+        <PasswordInput
+          onChangeText={setPassword}
+          value={password}
+          placeholder="Mot de passe"
+        />
         <TouchableOpacity style={styles.button} title="S'inscrire"
                           onPress={handleLogin}>
           <Text style={styles.buttonText}>Se connecter</Text>
@@ -128,24 +119,6 @@ const styles = StyleSheet.create({
   registerText: {
     fontWeight: 'bold',
     color: 'tomato',
-  },
-  inputSection: {
-    flexDirection: 'row',
-    borderWidth: 1,
-    borderColor: 'tomato',
-    padding: 10,
-    marginBottom: 15,
-    borderRadius: 10,
-  },
-  iconContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  inputPassword: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 

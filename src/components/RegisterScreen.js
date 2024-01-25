@@ -9,14 +9,13 @@ import {
 } from 'react-native';
 import {createUserWithEmailAndPassword, getAuth, updateProfile} from 'firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import PasswordInput from './PasswordInput';
 
 const RegisterScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [username, setUsername] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfPassword, setShowConfPassword] = useState(false);
 
   const handleRegister = () => {
     if (password !== confirmPassword) {
@@ -90,34 +89,17 @@ const RegisterScreen = ({navigation}) => {
         keyboardType="email-address"
         autoCapitalize="none"
       />
-      <View style={styles.inputSection}>
-        <TextInput
-          style={styles.inputPassword}
-          onChangeText={setPassword}
-          value={password}
-          placeholder="Mot de passe"
-          secureTextEntry={!showPassword}
-          autoCapitalize="none"
-        />
-        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-          <Ionicons name={showPassword ? 'eye-off' : 'eye'} size={24}
-                    color="grey"/>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.inputSection}>
-        <TextInput
-          style={styles.inputPassword}
-          onChangeText={setConfirmPassword}
-          value={confirmPassword}
-          placeholder="Confirmer le mot de passe"
-          secureTextEntry={!showConfPassword}
-          autoCapitalize="none"
-        />
-        <TouchableOpacity onPress={() => setShowConfPassword(!showConfPassword)}>
-          <Ionicons name={showConfPassword ? 'eye-off' : 'eye'} size={24}
-                    color="grey"/>
-        </TouchableOpacity>
-      </View>
+      <PasswordInput
+        onChangeText={setPassword}
+        value={password}
+        placeholder="Mot de passe"
+      />
+
+      <PasswordInput
+        onChangeText={setConfirmPassword}
+        value={confirmPassword}
+        placeholder="Confirmer le mot de passe"
+      />
       <TouchableOpacity style={styles.button} title="S'inscrire" onPress={handleRegister}>
         <Text style={styles.buttonText}>S'inscrire</Text>
       </TouchableOpacity>
@@ -167,24 +149,6 @@ const styles = StyleSheet.create({
   loginText: {
     fontWeight: 'bold',
     color: 'tomato',
-  },
-  inputSection: {
-    flexDirection: 'row',
-    borderWidth: 1,
-    borderColor: 'tomato',
-    padding: 10,
-    marginBottom: 15,
-    borderRadius: 10,
-  },
-  iconContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  inputPassword: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 
