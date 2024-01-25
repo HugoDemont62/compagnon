@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import {
+  SafeAreaView,
+  StatusBar,
   StyleSheet,
   Text,
   TextInput,
@@ -53,7 +55,6 @@ const LoginScreen = ({navigation}) => {
   };
 
   return (
-    <>
       <View style={styles.container}>
         <Text style={styles.title}>Se connecter</Text>
         <TextInput
@@ -80,7 +81,6 @@ const LoginScreen = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-    </>
   );
 };
 
