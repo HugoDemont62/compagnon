@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {getAuth, onAuthStateChanged} from 'firebase/auth';
 
 const ProfileScreen = ({navigation}) => {
@@ -19,19 +19,61 @@ const ProfileScreen = ({navigation}) => {
   }
 
   return (
-    <View>
-      <Text>Bonjour, {user.email}</Text>
-      <Text>Nom d'utilisateur: {user.displayName}</Text>
-      <Text>UID: {user.uid}</Text>
-      {user.photoURL &&
-        <Image source={{uri: user.photoURL}} style={{width: 50, height: 50}}/>}
-      <Button title="Se déconnecter" onPress={() => {
-        const auth = getAuth();
-        auth.signOut();
-        navigation.navigate('Auth', {screen: 'Login'});
-      }}/>
+    <View style={styles.container}>
+      <Text style={styles.welcomeMessage}>Bonjour, {user.displayName}</Text>
+      <Text style={styles.text}>Email: {user.email}</Text>
+      <View>
+        <TouchableOpacity style={styles.buttonSignOut} onPress={() => {
+          const auth = getAuth();
+          auth.signOut().then(() => {
+            console.log('User successfully signed out!');
+            navigation.navigate('Auth', {screen: 'Connexion'});
+          }).catch((error) => {
+            console.log('Failed to sign out', error);
+          });
+        }}>
+          <Text style={styles.textSignOut}>Se déconnecter</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: 16,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 24,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#000',
+    marginBottom: 16,
+    padding: 8,
+  },
+  welcomeMessage: {
+    fontSize: 18,
+    marginBottom: 16,
+  },
+  text: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  buttonSignOut: {
+    marginTop: 16,
+    backgroundColor: 'tomato',
+    padding: 8,
+    borderRadius: 10,
+  },
+  textSignOut: {
+    color: '#fff',
+    textAlign: 'center',
+  },
+});
 
 export default ProfileScreen;
