@@ -7,10 +7,12 @@ import {
   View,
 } from 'react-native';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = () => {
     const auth = getAuth();
@@ -51,35 +53,43 @@ const LoginScreen = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Se connecter</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setEmail}
-        value={email}
-        placeholder="Email"
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={setPassword}
-        value={password}
-        placeholder="Mot de passe"
-        secureTextEntry
-        autoCapitalize="none"
-      />
-      <TouchableOpacity style={styles.button} title="S'inscrire"
-                        onPress={handleLogin}>
-        <Text style={styles.buttonText}>Se connecter</Text>
-      </TouchableOpacity>
-      <View style={styles.registerContainer}>
-        <Text>Vous n'avez pas de compte ? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.registerText}>Inscrivez-vous</Text>
+    <>
+      <View style={styles.container}>
+        <Text style={styles.title}>Se connecter</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={setEmail}
+          value={email}
+          placeholder="Email"
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <View style={styles.inputSection}>
+          <TextInput
+            style={styles.inputPassword}
+            onChangeText={setPassword}
+            value={password}
+            placeholder="Mot de passe"
+            secureTextEntry={!showPassword}
+            autoCapitalize="none"
+          />
+          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+            <Ionicons name={showPassword ? 'eye-off' : 'eye'} size={24}
+                      color="grey"/>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity style={styles.button} title="S'inscrire"
+                          onPress={handleLogin}>
+          <Text style={styles.buttonText}>Se connecter</Text>
         </TouchableOpacity>
+        <View style={styles.registerContainer}>
+          <Text>Vous n'avez pas de compte ? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+            <Text style={styles.registerText}>Inscrivez-vous</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 
@@ -118,6 +128,24 @@ const styles = StyleSheet.create({
   registerText: {
     fontWeight: 'bold',
     color: 'tomato',
+  },
+  inputSection: {
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: 'tomato',
+    padding: 10,
+    marginBottom: 15,
+    borderRadius: 10,
+  },
+  iconContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  inputPassword: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
