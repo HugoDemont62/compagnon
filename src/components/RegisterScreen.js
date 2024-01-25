@@ -29,6 +29,11 @@ const RegisterScreen = ({navigation}) => {
         updateProfile(user, {displayName: username}).then(() => {
           console.log('Username updated successfully');
           navigation.navigate('App', {screen: 'Accueil'});
+          // Clear input fields
+          setEmail('');
+          setPassword('');
+          setConfirmPassword('');
+          setUsername('');
         }).catch((error) => {
           console.log('Failed to update username', error);
         });
