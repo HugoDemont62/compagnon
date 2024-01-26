@@ -12,41 +12,54 @@ import PasswordInput from './PasswordInput';
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const handleChangeEmail = (email) => {
+    setEmail(email);
+    setEmailError(''); // reset the error message
+  };
+
+  const handleChangePassword = (password) => {
+    setPassword(password);
+    setPasswordError(''); // reset the error message
+  };
 
   const handleLogin = () => {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+      setEmailError('');
+      setPasswordError('');
       console.log('User successfully logged in!');
       const user = userCredential.user;
       navigation.navigate('App', {screen: 'Accueil'});
     }).catch((error) => {
       const errorCode = error.code;
-      const errorMessage = error.message;
 
       switch (errorCode) {
         case 'auth/invalid-email':
-          // Handle invalid email
-          console.log('The email address is not valid.');
-          break;
-        case 'auth/user-disabled':
-          // Handle user disabled
-          console.log(
-            'The user account has been disabled by an administrator.');
+          setEmailError('The email address is not valid.');
           break;
         case 'auth/user-not-found':
-          // Handle user not found
-          console.log(
+          setEmailError(
             'There is no user record corresponding to this identifier. The user may have been deleted.');
           break;
         case 'auth/wrong-password':
-          // Handle wrong password
-          console.log(
+          setPasswordError(
             'The password is invalid or the user does not have a password.');
           break;
+        case 'auth/too-many-requests':
+          setPasswordError('Too many requests. Try again later.');
+          break;
+        case 'auth/network-request-failed':
+          setPasswordError('Network error. Try again later.');
+          break;
+        case 'auth/invalid-credential':
+          setPasswordError(
+            'The supplied auth credential is malformed or has expired.');
+          break;
         default:
-          // Handle other errors
-          console.log(errorMessage);
+          console.log(error.message);
           break;
       }
     });
@@ -55,23 +68,33 @@ const LoginScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Se connecter</Text>
+
+      {emailError !== '' &&
+        <Text style={styles.errorText}>{emailError}</Text>
+      }
       <TextInput
         style={styles.input}
-        onChangeText={setEmail}
+        onChangeText={handleChangeEmail}
         value={email}
         placeholder="Email"
         keyboardType="email-address"
         autoCapitalize="none"
       />
+
+      {passwordError !== '' &&
+        <Text style={styles.errorText}>{passwordError}</Text>
+      }
       <PasswordInput
-        onChangeText={setPassword}
+        onChangeText={handleChangePassword}
         value={password}
         placeholder="Mot de passe"
       />
+
       <TouchableOpacity style={styles.button} title="S'inscrire"
                         onPress={handleLogin}>
         <Text style={styles.buttonText}>Se connecter</Text>
       </TouchableOpacity>
+
       <View style={styles.registerContainer}>
         <Text>Vous n'avez pas de compte ? </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
@@ -117,6 +140,10 @@ const styles = StyleSheet.create({
   registerText: {
     fontWeight: 'bold',
     color: 'tomato',
+  },
+  errorText: {
+    color: 'tomato',
+    marginBottom: 10,
   },
 });
 
