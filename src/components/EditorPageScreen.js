@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import {getAuth, updateEmail, updateProfile} from 'firebase/auth';
 import {getDownloadURL, getStorage, ref, uploadBytes} from 'firebase/storage';
-import ImagePicker from 'react-native-image-picker';
 import placeholder from '../assets/placeholder.jpg';
 
 const EditorPageScreen = () => {
@@ -48,7 +47,8 @@ const EditorPageScreen = () => {
                  placeholder="Email"/>
       <Image style={styles.image}
              source={placeholder}/>
-      <TouchableOpacity style={styles.button} title="Choisir une photo" onPress={handleChoosePhoto}>
+      <TouchableOpacity style={styles.button} title="Choisir une photo"
+                        onPress={handleChoosePhoto}>
         <Text style={styles.buttonText}>Choisir une photo</Text>
       </TouchableOpacity>
       <Button title="Enregistrer" onPress={handleSave}/>

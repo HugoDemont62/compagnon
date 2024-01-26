@@ -17,12 +17,12 @@ const LoginScreen = ({navigation}) => {
 
   const handleChangeEmail = (email) => {
     setEmail(email);
-    setEmailError(''); // reset the error message
+    setEmailError('');
   };
 
   const handleChangePassword = (password) => {
     setPassword(password);
-    setPasswordError(''); // reset the error message
+    setPasswordError('');
   };
 
   const handleLogin = () => {

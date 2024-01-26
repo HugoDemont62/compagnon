@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
 import {
-  Button,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import {createUserWithEmailAndPassword, getAuth, updateProfile} from 'firebase/auth';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  updateProfile,
+} from 'firebase/auth';
 import PasswordInput from './PasswordInput';
 
 const RegisterScreen = ({navigation}) => {
@@ -36,42 +38,46 @@ const RegisterScreen = ({navigation}) => {
     }
 
     const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-      setEmailError('');
-      setPasswordError('');
-      console.log('User successfully logged in!');
-      const user = userCredential.user;
-      updateProfile(user, {displayName: username}).then(() => {
-        console.log('Username updated successfully');
-        navigation.navigate('App', {screen: 'Accueil'});
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
-        setUsername('');
-      }).catch((error) => {
-        console.log('Failed to update username', error);
-      });
-    }).catch((error) => {
-      const errorCode = error.code;
+    createUserWithEmailAndPassword(auth, email, password).
+      then((userCredential) => {
+        setEmailError('');
+        setPasswordError('');
+        console.log('User successfully logged in!');
+        const user = userCredential.user;
+        updateProfile(user, {displayName: username}).then(() => {
+          console.log('Username updated successfully');
+          navigation.navigate('App', {screen: 'Accueil'});
+          setEmail('');
+          setPassword('');
+          setConfirmPassword('');
+          setUsername('');
+        }).catch((error) => {
+          console.log('Failed to update username', error);
+        });
+      }).
+      catch((error) => {
+        const errorCode = error.code;
 
-      switch (errorCode) {
-        case 'auth/email-already-in-use':
-          setEmailError('The email address is already in use by another account.');
-          break;
-        case 'auth/invalid-email':
-          setEmailError('The email address is not valid.');
-          break;
-        case 'auth/operation-not-allowed':
-          console.log('Email/password accounts are not enabled. Enable email/password in the Firebase Console, under the Auth tab.');
-          break;
-        case 'auth/weak-password':
-          setPasswordError('The password is not strong enough.');
-          break;
-        default:
-          console.log(error.message);
-          break;
-      }
-    });
+        switch (errorCode) {
+          case 'auth/email-already-in-use':
+            setEmailError(
+              'The email address is already in use by another account.');
+            break;
+          case 'auth/invalid-email':
+            setEmailError('The email address is not valid.');
+            break;
+          case 'auth/operation-not-allowed':
+            console.log(
+              'Email/password accounts are not enabled. Enable email/password in the Firebase Console, under the Auth tab.');
+            break;
+          case 'auth/weak-password':
+            setPasswordError('The password is not strong enough.');
+            break;
+          default:
+            console.log(error.message);
+            break;
+        }
+      });
   };
 
   return (
@@ -113,7 +119,8 @@ const RegisterScreen = ({navigation}) => {
         placeholder="Confirmer le mot de passe"
       />
 
-      <TouchableOpacity style={styles.button} title="S'inscrire" onPress={handleRegister}>
+      <TouchableOpacity style={styles.button} title="S'inscrire"
+                        onPress={handleRegister}>
         <Text style={styles.buttonText}>S'inscrire</Text>
       </TouchableOpacity>
 
