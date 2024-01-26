@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import {
-  SafeAreaView,
-  StatusBar,
   StyleSheet,
   Text,
   TextInput,
@@ -55,32 +53,32 @@ const LoginScreen = ({navigation}) => {
   };
 
   return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Se connecter</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={setEmail}
-          value={email}
-          placeholder="Email"
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-        <PasswordInput
-          onChangeText={setPassword}
-          value={password}
-          placeholder="Mot de passe"
-        />
-        <TouchableOpacity style={styles.button} title="S'inscrire"
-                          onPress={handleLogin}>
-          <Text style={styles.buttonText}>Se connecter</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Se connecter</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={setEmail}
+        value={email}
+        placeholder="Email"
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+      <PasswordInput
+        onChangeText={setPassword}
+        value={password}
+        placeholder="Mot de passe"
+      />
+      <TouchableOpacity style={styles.button} title="S'inscrire"
+                        onPress={handleLogin}>
+        <Text style={styles.buttonText}>Se connecter</Text>
+      </TouchableOpacity>
+      <View style={styles.registerContainer}>
+        <Text>Vous n'avez pas de compte ? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+          <Text style={styles.registerText}>Inscrivez-vous</Text>
         </TouchableOpacity>
-        <View style={styles.registerContainer}>
-          <Text>Vous n'avez pas de compte ? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={styles.registerText}>Inscrivez-vous</Text>
-          </TouchableOpacity>
-        </View>
       </View>
+    </View>
   );
 };
 
