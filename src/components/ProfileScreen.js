@@ -35,7 +35,7 @@ const ProfileScreen = ({navigation}) => {
           <Text style={styles.textSignOut}>Se déconnecter</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonEditProfile} onPress={() => {
-          navigation.navigate('EditorPageScreen');
+          navigation.navigate('Edit Profil');
         }}>
           <Text style={styles.textEditProfile}>Modifier le profil</Text>
         </TouchableOpacity>

@@ -1,5 +1,13 @@
 import React, {useState} from 'react';
-import {Button, Image, TextInput, View} from 'react-native';
+import {
+  Button,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {getAuth, updateEmail, updateProfile} from 'firebase/auth';
 import {getDownloadURL, getStorage, ref, uploadBytes} from 'firebase/storage';
 import placeholder from '../assets/placeholder.jpg';
@@ -11,6 +19,10 @@ const EditorPageScreen = () => {
   const [email, setEmail] = useState(user.email);
   const [photoURL, setPhotoURL] = useState(user.photoURL);
   const [newPhoto, setNewPhoto] = useState(null);
+
+  const handleChoosePhoto = () => {
+
+  };
 
   const handleSave = async () => {
     if (newPhoto) {
@@ -28,16 +40,49 @@ const EditorPageScreen = () => {
   };
 
   return (
-    <View>
-      <TextInput value={name} onChangeText={setName} placeholder="Nom"/>
-      <TextInput value={email} onChangeText={setEmail} placeholder="Email"/>
-      <Image source={photoURL ? {uri: photoURL} : placeholder}/>
-      <Button title="Choisir une photo" onPress={() => {
-        /* code pour choisir une photo */
-      }}/>
+    <View style={styles.container}>
+      <TextInput style={styles.input} value={name} onChangeText={setName}
+                 placeholder="Nom"/>
+      <TextInput style={styles.input} value={email} onChangeText={setEmail}
+                 placeholder="Email"/>
+      <Image style={styles.image}
+             source={photoURL ? {uri: photoURL} : placeholder}/>
+      <TouchableOpacity style={styles.button} title="Choisir une photo" onPress={handleChoosePhoto}>
+        <Text style={styles.buttonText}>Choisir une photo</Text>
+      </TouchableOpacity>
       <Button title="Enregistrer" onPress={handleSave}/>
     </View>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: 16,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: 'tomato',
+    marginBottom: 16,
+    padding: 8,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    marginBottom: 16,
+    borderRadius: 50,
+    borderColor: 'tomato',
+    borderWidth: 1,
+  },
+  button: {
+    backgroundColor: 'tomato',
+    padding: 8,
+    marginBottom: 16,
+  },
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+  },
+});
 export default EditorPageScreen;
