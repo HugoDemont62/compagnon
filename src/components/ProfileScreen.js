@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {getAuth, onAuthStateChanged} from 'firebase/auth';
-import EditorPageScreen from './EditorPageScreen';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const ProfileScreen = ({navigation}) => {
   const [user, setUser] = useState(null);
@@ -23,6 +23,11 @@ const ProfileScreen = ({navigation}) => {
       <Text style={styles.welcomeMessage}>Bonjour, {user.displayName}</Text>
       <Text style={styles.text}>Email: {user.email}</Text>
       <View>
+        <TouchableOpacity onPress={() => {
+          navigation.navigate('Edit Profil');
+        }}>
+          <Ionicons name="settings" size={30} color="gray"/>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.buttonSignOut} onPress={() => {
           const auth = getAuth();
           auth.signOut().then(() => {
@@ -33,11 +38,6 @@ const ProfileScreen = ({navigation}) => {
           });
         }}>
           <Text style={styles.textSignOut}>Se déconnecter</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonEditProfile} onPress={() => {
-          navigation.navigate('Edit Profil');
-        }}>
-          <Text style={styles.textEditProfile}>Modifier le profil</Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -11,33 +11,18 @@ import {
 import {getAuth, updateEmail, updateProfile} from 'firebase/auth';
 import {getDownloadURL, getStorage, ref, uploadBytes} from 'firebase/storage';
 import ImagePicker from 'react-native-image-picker';
+import placeholder from '../assets/placeholder.jpg';
 
 const EditorPageScreen = () => {
   const auth = getAuth();
   const user = auth.currentUser;
   const [name, setName] = useState(user.displayName);
   const [email, setEmail] = useState(user.email);
-  const [photo, setPhoto] = useState(user.photoURL);
+  const [photo, setPhoto] = useState(null);
 
   // TODO : Faire l'ajout correct de la photo de profil
   const handleChoosePhoto = () => {
-    const options = {
-      noData: true,
-    };
-
-    ImagePicker.launchImageLibrary(options, response => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        if (response.uri) {
-          setPhoto(response);
-        }
-      }
-    }).then(r => console.log(r));
+    //
   };
 
   const handleSave = async () => {
@@ -49,7 +34,7 @@ const EditorPageScreen = () => {
       setPhoto({uri: url});
     }
 
-    await updateProfile(user, {displayName: name, photoURL: photo.uri});
+    await updateProfile(user, {displayName: name});
     if (user.email !== email) {
       await updateEmail(user, email);
     }
@@ -62,7 +47,7 @@ const EditorPageScreen = () => {
       <TextInput style={styles.input} value={email} onChangeText={setEmail}
                  placeholder="Email"/>
       <Image style={styles.image}
-             source={photoURL ? {uri: photoURL} : placeholder}/>
+             source={placeholder}/>
       <TouchableOpacity style={styles.button} title="Choisir une photo" onPress={handleChoosePhoto}>
         <Text style={styles.buttonText}>Choisir une photo</Text>
       </TouchableOpacity>
