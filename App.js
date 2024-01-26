@@ -10,12 +10,12 @@ import RegisterScreen from './src/components/RegisterScreen';
 import {initializeApp} from 'firebase/app';
 import firebaseConfig from './src/components/firebaseConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getAuth, initializeAuth, getReactNativePersistence } from 'firebase/auth';
+import {getReactNativePersistence, initializeAuth} from 'firebase/auth';
 import EditorPageScreen from './src/components/EditorPageScreen';
 
 const app = initializeApp(firebaseConfig);
 const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(AsyncStorage)
+  persistence: getReactNativePersistence(AsyncStorage),
 });
 
 initializeApp(firebaseConfig);
@@ -36,8 +36,9 @@ const AuthStackScreen = () => {
 const AppStackScreen = () => {
   return (
     <AppStack.Navigator>
-      <AppStack.Screen name="Home" component={HomeTabScreen} options={{headerShown: false}}/>
-      <AppStack.Screen name="EditorPageScreen" component={EditorPageScreen}/>
+      <AppStack.Screen name="Home" component={HomeTabScreen}
+                       options={{headerShown: false}}/>
+      <AppStack.Screen name="Edit Profil" component={EditorPageScreen}/>
     </AppStack.Navigator>
   );
 };
