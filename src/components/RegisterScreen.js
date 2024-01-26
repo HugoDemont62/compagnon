@@ -15,65 +15,69 @@ const RegisterScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const [username, setUsername] = useState('');
+
+  const handleChangeEmail = (email) => {
+    setEmail(email);
+    setEmailError(''); // reset the error message
+  };
+
+  const handleChangePassword = (password) => {
+    setPassword(password);
+    setPasswordError(''); // reset the error message
+  };
 
   const handleRegister = () => {
     if (password !== confirmPassword) {
-      console.log('Les mots de passe ne correspondent pas.');
+      setPasswordError('Les mots de passe ne correspondent pas.');
       return;
     }
 
     const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password).
-      then((userCredential) => {
-        console.log('User successfully logged in!');
-        const user = userCredential.user;
-        updateProfile(user, {displayName: username}).then(() => {
-          console.log('Username updated successfully');
-          navigation.navigate('App', {screen: 'Accueil'});
-          // Clear input fields
-          setEmail('');
-          setPassword('');
-          setConfirmPassword('');
-          setUsername('');
-        }).catch((error) => {
-          console.log('Failed to update username', error);
-        });
-      }).
-      catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-
-        switch (errorCode) {
-          case 'auth/email-already-in-use':
-            // Handle email already in use
-            console.log(
-              'The email address is already in use by another account.');
-            break;
-          case 'auth/invalid-email':
-            // Handle invalid email
-            console.log('The email address is not valid.');
-            break;
-          case 'auth/operation-not-allowed':
-            // Handle operation not allowed
-            console.log(
-              'Email/password accounts are not enabled. Enable email/password in the Firebase Console, under the Auth tab.');
-            break;
-          case 'auth/weak-password':
-            // Handle weak password
-            console.log('The password is not strong enough.');
-            break;
-          default:
-            // Handle other errors
-            console.log(errorMessage);
-            break;
-        }
+    createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+      setEmailError('');
+      setPasswordError('');
+      console.log('User successfully logged in!');
+      const user = userCredential.user;
+      updateProfile(user, {displayName: username}).then(() => {
+        console.log('Username updated successfully');
+        navigation.navigate('App', {screen: 'Accueil'});
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+        setUsername('');
+      }).catch((error) => {
+        console.log('Failed to update username', error);
       });
+    }).catch((error) => {
+      const errorCode = error.code;
+
+      switch (errorCode) {
+        case 'auth/email-already-in-use':
+          setEmailError('The email address is already in use by another account.');
+          break;
+        case 'auth/invalid-email':
+          setEmailError('The email address is not valid.');
+          break;
+        case 'auth/operation-not-allowed':
+          console.log('Email/password accounts are not enabled. Enable email/password in the Firebase Console, under the Auth tab.');
+          break;
+        case 'auth/weak-password':
+          setPasswordError('The password is not strong enough.');
+          break;
+        default:
+          console.log(error.message);
+          break;
+      }
+    });
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>S'inscrire</Text>
+
       <TextInput
         style={styles.input}
         onChangeText={setUsername}
@@ -81,16 +85,24 @@ const RegisterScreen = ({navigation}) => {
         placeholder="Nom d'utilisateur"
         autoCapitalize="none"
       />
+
+      {emailError !== '' &&
+        <Text style={styles.errorText}>{emailError}</Text>
+      }
       <TextInput
         style={styles.input}
-        onChangeText={setEmail}
+        onChangeText={handleChangeEmail}
         value={email}
         placeholder="Email"
         keyboardType="email-address"
         autoCapitalize="none"
       />
+
+      {passwordError !== '' &&
+        <Text style={styles.errorText}>{passwordError}</Text>
+      }
       <PasswordInput
-        onChangeText={setPassword}
+        onChangeText={handleChangePassword}
         value={password}
         placeholder="Mot de passe"
       />
@@ -100,9 +112,11 @@ const RegisterScreen = ({navigation}) => {
         value={confirmPassword}
         placeholder="Confirmer le mot de passe"
       />
+
       <TouchableOpacity style={styles.button} title="S'inscrire" onPress={handleRegister}>
         <Text style={styles.buttonText}>S'inscrire</Text>
       </TouchableOpacity>
+
       <View style={styles.loginContainer}>
         <Text>Vous avez déjà un compte ? </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
@@ -149,6 +163,10 @@ const styles = StyleSheet.create({
   loginText: {
     fontWeight: 'bold',
     color: 'tomato',
+  },
+  errorText: {
+    color: 'tomato',
+    marginBottom: 10,
   },
 });
 
