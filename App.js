@@ -38,7 +38,7 @@ const AppStackScreen = () => {
     <AppStack.Navigator>
       <AppStack.Screen name="Home" component={HomeTabScreen}
                        options={{headerShown: false}}/>
-      <AppStack.Screen name="Edit Profil" component={EditorPageScreen}/>
+      <AppStack.Screen name="Edit Profile" component={EditorPageScreen}/>
     </AppStack.Navigator>
   );
 };
