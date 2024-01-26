@@ -10,30 +10,46 @@ import {
 } from 'react-native';
 import {getAuth, updateEmail, updateProfile} from 'firebase/auth';
 import {getDownloadURL, getStorage, ref, uploadBytes} from 'firebase/storage';
-import placeholder from '../assets/placeholder.jpg';
+import ImagePicker from 'react-native-image-picker';
 
 const EditorPageScreen = () => {
   const auth = getAuth();
   const user = auth.currentUser;
   const [name, setName] = useState(user.displayName);
   const [email, setEmail] = useState(user.email);
-  const [photoURL, setPhotoURL] = useState(user.photoURL);
-  const [newPhoto, setNewPhoto] = useState(null);
+  const [photo, setPhoto] = useState(user.photoURL);
 
+  // TODO : Faire l'ajout correct de la photo de profil
   const handleChoosePhoto = () => {
+    const options = {
+      noData: true,
+    };
 
+    ImagePicker.launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        if (response.uri) {
+          setPhoto(response);
+        }
+      }
+    }).then(r => console.log(r));
   };
 
   const handleSave = async () => {
-    if (newPhoto) {
+    if (photo) {
       const storage = getStorage();
       const storageRef = ref(storage, 'userPhotos/' + user.uid);
-      await uploadBytes(storageRef, newPhoto);
+      await uploadBytes(storageRef, photo);
       const url = await getDownloadURL(storageRef);
-      setPhotoURL(url);
+      setPhoto({uri: url});
     }
 
-    await updateProfile(user, {displayName: name, photoURL});
+    await updateProfile(user, {displayName: name, photoURL: photo.uri});
     if (user.email !== email) {
       await updateEmail(user, email);
     }
