@@ -5,7 +5,7 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text>HomeScreen</Text>
+      <Text>Rapport Screen</Text>
     </View>
   );
 };

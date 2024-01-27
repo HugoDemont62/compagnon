@@ -12,6 +12,7 @@ import firebaseConfig from './src/components/firebaseConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getReactNativePersistence, initializeAuth} from 'firebase/auth';
 import EditorPageScreen from './src/components/EditorPageScreen';
+import ReportScreen from './src/components/ReportScreen';
 
 const app = initializeApp(firebaseConfig);
 const auth = initializeAuth(app, {
@@ -54,6 +55,8 @@ const HomeTabScreen = () => {
             iconName = 'home';
           } else if (route.name === 'Profile') {
             iconName = 'person';
+          } else if (route.name === 'Report') {
+            iconName = 'create';
           }
           return <Ionicons name={iconName} size={size} color={color}/>;
         },
@@ -61,6 +64,7 @@ const HomeTabScreen = () => {
         tabBarInactiveTintColor: 'gray',
       })}>
       <Tab.Screen name="Accueil" component={HomeScreen}/>
+      <Tab.Screen name="Report" component={ReportScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen}/>
     </Tab.Navigator>
   );
