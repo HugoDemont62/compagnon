@@ -6,15 +6,15 @@ import placeholder from '../assets/placeholder.jpg';
 
 const ProfileScreen = ({navigation}) => {
   const [user, setUser] = useState(null);
+  const auth = getAuth();
 
   useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    const unsubscribe = onAuthStateChanged(auth, (updatedUser) => {
+      setUser(updatedUser);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [auth]);
 
   if (!user) {
     return null;
