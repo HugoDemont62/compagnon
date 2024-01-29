@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Button,
   Image,
@@ -11,10 +11,10 @@ import {
 import {getAuth, updateEmail, updateProfile} from 'firebase/auth';
 import {getDownloadURL, getStorage, ref, uploadBytes} from 'firebase/storage';
 import placeholder from '../assets/placeholder.jpg';
+import {UserContext} from './UserContext';
 
 const EditorPageScreen = () => {
-  const auth = getAuth();
-  const user = auth.currentUser;
+  const user = useContext(UserContext);
   const [name, setName] = useState(user.displayName);
   const [email, setEmail] = useState(user.email);
   const [photo, setPhoto] = useState(null);
@@ -32,11 +32,11 @@ const EditorPageScreen = () => {
       const url = await getDownloadURL(storageRef);
       setPhoto({uri: url});
     }
-
     await updateProfile(user, {displayName: name});
     if (user.email !== email) {
       await updateEmail(user, email);
     }
+    console.log('User successfully updated!');
   };
 
   return (
