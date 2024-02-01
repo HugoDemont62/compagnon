@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {getAuth, onAuthStateChanged} from 'firebase/auth';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import placeholder from '../assets/placeholder.jpg';
 
 const ProfileScreen = ({navigation}) => {
@@ -22,6 +21,8 @@ const ProfileScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      {
+        /*
       <View style={styles.header}>
         <TouchableOpacity onPress={() => {
           navigation.navigate('Edit Profile');
@@ -29,6 +30,8 @@ const ProfileScreen = ({navigation}) => {
           <Ionicons name="settings" size={30} color="gray"/>
         </TouchableOpacity>
       </View>
+      */
+      }
       <View style={styles.imageContainer}>
         <Image style={styles.avatarPlaceholder} source={placeholder}/>
       </View>
@@ -36,22 +39,19 @@ const ProfileScreen = ({navigation}) => {
         <Text style={styles.welcomeMessage}>Hello, {user.displayName}</Text>
         <Text style={styles.text}>Email: {user.email}</Text>
       </View>
-      {{
-        /*<View style={styles.containerBottom}>
-              <TouchableOpacity style={styles.buttonSignOut} onPress={() => {
-                const auth = getAuth();
-                auth.signOut().then(() => {
-                  console.log('User successfully signed out!');
-                  navigation.navigate('Auth', {screen: 'Connexion'});
-                }).catch((error) => {
-                  console.log('Failed to sign bout', error);
-                });
-              }}>
-                <Text style={styles.textSignOut}>Disconnect</Text>
-              </TouchableOpacity>
-            </View>
-              }}*/
-      }}
+      <View style={styles.containerBottom}>
+        <TouchableOpacity style={styles.buttonSignOut} onPress={() => {
+          const auth = getAuth();
+          auth.signOut().then(() => {
+            console.log('User successfully signed out!');
+            navigation.navigate('Auth', {screen: 'Connexion'});
+          }).catch((error) => {
+            console.log('Failed to sign bout', error);
+          });
+        }}>
+          <Text style={styles.textSignOut}>Disconnect</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

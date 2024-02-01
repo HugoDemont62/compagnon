@@ -26,7 +26,7 @@ const ReportScreen = ({navigation}) => {
   };
 
   const handleSubmit = () => {
-    // Ajouter le code pour générer le PDF
+
     console.log(report);
   };
 
