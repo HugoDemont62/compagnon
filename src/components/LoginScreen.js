@@ -105,7 +105,7 @@ const LoginScreen = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles= StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     padding: 20,
