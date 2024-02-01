@@ -13,7 +13,8 @@ import {getDownloadURL, getStorage, ref, uploadBytes} from 'firebase/storage';
 import placeholder from '../assets/placeholder.jpg';
 
 const EditorPageScreen = () => {
-  const user = useContext(UserContext);
+  const auth = getAuth();
+  const [user, setUser] = useState(auth.currentUser);
   const [name, setName] = useState(user.displayName);
   const [email, setEmail] = useState(user.email);
   const [photo, setPhoto] = useState(null);
