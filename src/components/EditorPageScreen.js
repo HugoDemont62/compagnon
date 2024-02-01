@@ -11,7 +11,6 @@ import {
 import {getAuth, updateEmail, updateProfile} from 'firebase/auth';
 import {getDownloadURL, getStorage, ref, uploadBytes} from 'firebase/storage';
 import placeholder from '../assets/placeholder.jpg';
-import {UserContext} from './UserContext';
 
 const EditorPageScreen = () => {
   const user = useContext(UserContext);
