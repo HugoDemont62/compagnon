@@ -21,8 +21,7 @@ const ProfileScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      {
-        /*
+      {/*
       <View style={styles.header}>
         <TouchableOpacity onPress={() => {
           navigation.navigate('Edit Profile');
@@ -30,8 +29,7 @@ const ProfileScreen = ({navigation}) => {
           <Ionicons name="settings" size={30} color="gray"/>
         </TouchableOpacity>
       </View>
-      */
-      }
+      */}
       <View style={styles.imageContainer}>
         <Image style={styles.avatarPlaceholder} source={placeholder}/>
       </View>
